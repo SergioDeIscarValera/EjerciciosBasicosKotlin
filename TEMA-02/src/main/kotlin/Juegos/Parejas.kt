@@ -11,6 +11,7 @@ fun main(){
     generarParejas(tablero)
 
     //Desvelar Y Comprobar
+
     repeat(2){
         val pos = responsePos(tablero, "Introduce la posición donde quieres desvelar:")
         tableroVisible[pos[0]][pos[1]] = tablero[pos[0]][pos[1]].toString()
@@ -21,7 +22,7 @@ fun main(){
 
 fun responsePos(tablero: Array<IntArray>, s: String): IntArray {
     println(s)
-    val regexPos = Regex("[1-]+[1]+")
+    val regexPos = Regex("[0-2]\\d-[0-2]\\d")
     var response: String
     do {
         response = readln()

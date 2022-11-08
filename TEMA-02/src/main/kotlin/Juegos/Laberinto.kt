@@ -137,6 +137,7 @@ fun isBlock(laberinto: Array<IntArray>, pos: IntArray, intCasilla:Int): Boolean{
     return true
 }
 
+
 // region Generate laberinto
 fun generatePasillo(laberinto: Array<IntArray>, pos: IntArray) {
     //Posición inicial 0,0
