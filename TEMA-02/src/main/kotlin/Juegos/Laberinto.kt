@@ -4,7 +4,7 @@ import kotlin.system.exitProcess
  * Juego del minotauro laberinto
  */
 
-const val BRANCH_PROBABILITY = 20
+const val BRANCH_PROBABILITY = 15
 const val BRANCH_DEAD_PROBABILITY = 0 // 1%
 const val ANSI_RED_BACKGROUND = "\u001B[41m"
 const val ANSI_GREEN_BACKGROUND = "\u001B[42m"
@@ -69,7 +69,7 @@ fun movimiento(laberinto: Array<IntArray>, pos: IntArray, intCasilla: Int, isIa:
     return true
 }
 
-fun spawnEnte(laberinto: Array<IntArray>, count: Int, matriz: Array<IntArray>?, intCasilla: Int) {
+private fun spawnEnte(laberinto: Array<IntArray>, count: Int, matriz: Array<IntArray>?, intCasilla: Int) {
     for (i in 0 until count){
         var randomPos: Array<Int>
         do {
@@ -201,7 +201,7 @@ fun mostrarLaberinto(laberinto: Array<IntArray>){
 // endregion
 
 // region Input
-private fun responseNum(menssage: String, min: Int, max: Int): Int {
+fun responseNum(menssage: String, min: Int, max: Int): Int {
     println(menssage)
     var response: Int
     do {
