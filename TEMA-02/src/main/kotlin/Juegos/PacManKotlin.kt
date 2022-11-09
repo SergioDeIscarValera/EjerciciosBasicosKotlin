@@ -16,7 +16,7 @@ const val ANSI_BLACK_BACKGROUND = "\u001B[40m" // fantasma 4
 const val ANSI_RESET = "\u001B[0m"
 //endregion
 
-var VidasPlayer = 3
+private var VidasPlayer = 3
 var PuntosPlayer = 0
 
 fun main (){
@@ -65,7 +65,7 @@ fun main (){
         spawnFantasmas(fantasmasPos, mapa)
 
         VidasPlayer--
-    }while (VidasPlayer > 0 || PuntosPlayer >= 100)
+    }while (VidasPlayer > 0 && PuntosPlayer < 100)
 
     println("Los puntos obtenidos han sido $PuntosPlayer")
 }
@@ -126,7 +126,7 @@ private fun spawnFantasmas(posicionesFantasmas: Array<IntArray>, mapa: Array<Int
     }
 }
 
-fun mostrarMapa(mapa: Array<IntArray>) {
+private fun mostrarMapa(mapa: Array<IntArray>) {
     clear()
     println("Puntos: $PuntosPlayer")
     for(i in mapa){
@@ -163,13 +163,13 @@ fun mostrarVidas(vidas: Int) {
     println()
 }
 
-private fun clear() {
+fun clear() {
     for (i in 0..10) {
         println()
     }
 }
 
-fun generateMapa(mapa: Array<IntArray>) {
+private fun generateMapa(mapa: Array<IntArray>) {
     mapa[0] = intArrayOf(1,	1,	1,	1,	1,	1,	1,	1,	2,	1,	1,	1,	1,	1,	1,	1,	1)
     mapa[1] = intArrayOf(1,	2,	2,	1,	2,	1,	2,	2,	2,	2,	2,	1,	2,	1,	2,	2,	1)
     mapa[2] = intArrayOf(1,	1,	1,	1,	2,	1,	1,	1,	2,	1,	1,	1,	2,	1,	1,	1,	1)
