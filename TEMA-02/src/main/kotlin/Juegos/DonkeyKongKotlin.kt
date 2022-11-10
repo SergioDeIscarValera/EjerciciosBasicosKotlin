@@ -136,8 +136,8 @@ private fun mostrarMapa(mapa: Array<IntArray>) {
                     3 -> "$ANSI_GREEN_BACKGROUND   $ANSI_RESET"
                     4 -> "$ANSI_BLACK_BACKGROUND   $ANSI_RESET"
                     5 -> "$ANSI_WHITE_BACKGROUND   $ANSI_RESET"
-                    6 -> "$ANSI_PURPLE_BACKGROUND   $ANSI_RESET"
-                    7 -> "$ANSI_YELLOW_BACKGROUND   $ANSI_RESET"
+                    6 -> "$ANSI_YELLOW_BACKGROUND   $ANSI_RESET"
+                    7 -> "$ANSI_PURPLE_BACKGROUND   $ANSI_RESET"
                     else -> "$ANSI_BLACK_BACKGROUND   $ANSI_RESET"
                 }
             )

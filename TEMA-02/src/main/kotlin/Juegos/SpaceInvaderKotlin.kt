@@ -10,9 +10,11 @@ private val Enemigos = Array(30){ Enemigo(intArrayOf(-1,-1).toTypedArray(), 3) }
 private var EnemigosMovimientoCount = 1
 private var EnemigosDireccion = 1 // 1 | -1
 private val ListDisparos = mutableListOf<Disparo>()
+private var Dificultad = 0
 
 fun main(){
     val mapa = Array(16){ IntArray(24) { 0 } }
+    Dificultad = choseDificultad()
     generarMapa(mapa)
     do {
         println("Puntos: $PlayerPoints")
@@ -22,14 +24,26 @@ fun main(){
 
         calcularDisparos(mapa)
 
-        turnoEnemigos(mapa)
+        turnoEnemigos()
 
         clearEnemigosArea(mapa)
         mostrarDisparos(mapa)
         mostrarEnemigos(mapa)
-    }while (PlayerVidas > 0)
+    }while (PlayerVidas > 0 && enemigosConVida())
 
-    println("Has acabado con un total de $PlayerPoints puntos.")
+    mostrarMapa(mapa)
+    println("$ANSI_BLUE_BACKGROUND\nHas acabado con un total de $PlayerPoints puntos.\n\n$ANSI_RESET")
+}
+
+fun enemigosConVida(): Boolean {
+    var boolean = false
+    for (i in Enemigos){
+        if (i.vida>0){
+            boolean = true
+            break
+        }
+    }
+    return boolean
 }
 
 fun calcularDisparos(mapa: Array<IntArray>) {
@@ -45,12 +59,12 @@ fun mostrarDisparos(mapa: Array<IntArray>) {
     }
 }
 
-fun turnoEnemigos(mapa: Array<IntArray>) {
+fun turnoEnemigos() {
     //Mover
-    if((0..100).random() <= 5 )moverEnemigos()
+    if((0..100).random() <= Dificultad )moverEnemigos()
     //Disparo de los de abajo
     for (i in ultimaLineaEnemigos()){
-        if ((0..100).random() <= 8) disparoFun(i.pos.toIntArray(), 1)
+        if ((0..100).random() <= Dificultad) disparoFun(i.pos.toIntArray(), 1)
     }
 }
 
@@ -72,7 +86,7 @@ private fun movimientoDisparos(mapa: Array<IntArray>) {
                     if (Enemigos[index].vida > 0){
                         Enemigos[index].vida--
                         println("Enemgio dañado")
-                        PlayerPoints += 25
+                        PlayerPoints += 2 * Dificultad
                         remove = true
                     }else{
                         ListDisparos[i].pos[0] += ListDisparos[i].direccion
@@ -98,11 +112,11 @@ private fun movimientoDisparos(mapa: Array<IntArray>) {
 
 private fun ultimaLineaEnemigos(): Array<Enemigo> {
     val listPosition = mutableListOf<Array<Int>>()
-    for (i in 0..10){
+    for (i in 0..9){
         if (Enemigos[i].vida > 0)
             listPosition.add(Enemigos[i].pos)
     }
-    for (i in 11..29){
+    for (i in 10..29){
         for (j in listPosition){
             if (Enemigos[i].pos[1] == j[1] && Enemigos[i].pos[0] > j[0] && Enemigos[i].vida > 0){
                 listPosition[listPosition.indexOf(j)] = Enemigos[i].pos
@@ -144,8 +158,10 @@ fun turnoPlayer(mapa: Array<IntArray>) {
     when(responseAction("Quieres disparar 'D', quieres moverte 'M' o no hacer nada 'N': ", 'M', 'D', 'N')){
         1   -> moverPlayer(mapa)
         -1  -> disparoFun(intArrayOf(PlayerPos[0]-1,PlayerPos[1]), -1)
-        else -> return
     }
+
+    clearPlayerArea(mapa)
+    spawnPlayer(mapa)
 }
 
 private fun disparoFun(pos: IntArray, direccion: Int) {
@@ -159,8 +175,6 @@ private fun moverPlayer(mapa: Array<IntArray>) {
             1 -> if (PlayerPos[0] in mapa.indices && PlayerPos[1] +2 in mapa.first().indices){ PlayerPos[1] += 1; break}
         }
     }while (true)
-    clearPlayerArea(mapa)
-    spawnPlayer(mapa)
 }
 
 private fun responseAction(text: String, trueChar: Char, falseChar: Char, nothingChar: Char): Int {
@@ -169,6 +183,17 @@ private fun responseAction(text: String, trueChar: Char, falseChar: Char, nothin
         val response = readln().uppercase()
         if (response == "$trueChar") return 1 else if (response == "$falseChar") return -1 else if(response == "$nothingChar") return 0
         println("Introduce un valor valido.")
+    }while (true)
+}
+
+fun choseDificultad(): Int {
+    println("Que dificultad quieres facil, normal o dificil: ")
+    do {
+        val response = readln().uppercase()
+        if (response == "FACIL") return 5
+        if (response == "NORMAL") return 9
+        if (response == "DIFICIL") return 14
+        println("Introduce un valor valido 'facil, normal o dificil'.")
     }while (true)
 }
 
@@ -236,7 +261,13 @@ fun spawnEnemigos(mapa: Array<IntArray>) {
                 if (j % 2 != 0){
                     mapa[i][j] = 2
                     Enemigos[index].pos = intArrayOf(i,j).toTypedArray()
-                    Enemigos[index].vida = (1..3).random()
+
+                    if (Dificultad >= 9){
+                        Enemigos[index].vida = (2..3).random()
+                    }else{
+                        Enemigos[index].vida = (1..3).random()
+                    }
+
                     index++
                 }
             }
