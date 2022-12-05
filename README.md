@@ -23,5 +23,7 @@ Ejercicios básicos en Kotlin realizados en clase de 1°DAM.
 
 - [Water Contain](https://github.com/SergioDeIscarValera/EjerciciosBasicosKotlin/blob/main/TEMA-02/src/main/kotlin/Examen/Water_Container.kt)
 
+- [Juego de la Vida](https://github.com/SergioDeIscarValera/EjerciciosBasicosKotlin/blob/main/TEMA-02/src/main/kotlin/Juegos/JuegoDeLaVida.kt)
+
 # Autor
 Codificado por 🚀 [Sergio de Iscar Valera](https://github.com/SergioDeIscarValera) 🐓
