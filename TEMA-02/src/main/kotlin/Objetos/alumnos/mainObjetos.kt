@@ -1,7 +1,5 @@
 package Objetos.alumnos
 
-import Objetos.alumnos.models.Alumno
-import Objetos.alumnos.models.Coche
 import Objetos.alumnos.models.Vehicle
 
 fun main(){

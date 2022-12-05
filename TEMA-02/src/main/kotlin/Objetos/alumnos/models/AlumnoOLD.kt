@@ -3,7 +3,7 @@ package Objetos.alumnos.models
 import java.time.LocalDateTime
 import java.util.UUID
 
-class Alumno {
+class AlumnoOLD {
     // region Estado
     private val id = UUID.randomUUID()
     private var nombre = ""
